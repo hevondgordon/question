@@ -1,0 +1,127 @@
+
+$primarycolor:#2BDEF3;
+$secondarycolor:#fff;
+$titlecolor:#2bbbad;
+$questioncolor:#444748;
+$bodycolor:#f9f9f9;
+
+body{
+  background-color: $titlecolor;
+}
+.description{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 50px;
+    display: inline;
+
+}
+div{
+
+  .promo{
+    margin-left:160px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 20px;
+    padding-bottom: 70px;
+    padding-top: 40px;
+  }
+
+
+
+
+  .btn{
+    border-radius: 20px;
+
+
+  }
+  .logintitle-other{
+    margin-top: -15px;
+    height:50px;
+    width:50px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    margin-left: 20px;
+    color: white;
+    font-size:20px;
+    font-family: 'Montserrat', sans-serif;
+
+    display: inline-block;
+    background-color: white;
+    color:$titlecolor;
+
+  }
+  .uestion{
+    margin-bottom: 2px;
+    display: inline-block;
+  }
+  .logintitle{
+    // display: inline-block;
+    margin-top: 30px;
+    height:50px;
+    width:50px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 50px;
+    margin-left: 20px;
+    color: white;
+    font-size:20px;
+    font-family: 'Montserrat', sans-serif;
+
+
+    background-color: $titlecolor
+  }
+
+    .text-cola{
+      color:gray !important;
+    }
+
+  .fields{
+    margin-bottom: 60px;
+
+  }
+  .top{
+    width: 0;
+  	height: 0;
+  	border-bottom: 100px solid white;
+  	border-right: 100px solid transparent;
+    // height:80px;
+    background-color:$titlecolor;
+    margin-top:50px;
+    color:gray;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+    padding:10px;
+    // padding:20px;
+  }
+  .loginbody{
+    background-color: white;
+    padding-top: 60px;
+    height:460px;
+  }
+  .registerbody{
+
+      background-color: white;
+      padding-top: 60px;
+      padding-bottom: 40px;
+      height:600px;
+
+  }
+  .rightside{
+      background-color: $titlecolor;
+      margin-top:50px;
+      color: white;
+      border-left:2px solid white;
+
+  }
+
+
+}
+
+.forgot{
+  color: $titlecolor;
+}
+.logintext{
+  margin-top:-40px;
+
+}

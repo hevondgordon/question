@@ -1,0 +1,60 @@
+body {
+  padding-right: 50px !important;
+  padding-left: 50px !important;
+  background-color: #f9f9f9; }
+
+nav {
+  margin-bottom: 40px;
+  background-color: white !important; }
+  nav div i {
+    color: gray !important;
+    margin-top: 5px; }
+  nav div input[type="text"] {
+    color: gray !important;
+    width: 100%;
+    border: none !important; }
+    nav div input[type="text"]:focus:not([readonly]) {
+      border-bottom: none !important;
+      box-shadow: none !important; }
+  nav div h5 {
+    margin-top: 18px;
+    color: #2bbbad !important; }
+
+.item {
+  margin-bottom: 20px;
+  height: 225px;
+  padding: 20px; }
+  .item .delete {
+    font-size: 20px;
+    color: red;
+    margin-top: 12px;
+  cursor: pointer;}
+  .item .edit {
+    font-size: 20px;
+    color: #2bbbad;
+    margin-top: 12px;
+  cursor: pointer;}
+  .item .chip {
+    margin-bottom: 15% !important; }
+  .item .item-owner {
+    font-family: 'Lato', sans-serif;
+    padding-right: 8px;
+    padding-left: 8px; }
+  .item .item-date {
+    font-family: 'Lato', sans-serif; }
+  .item .item-title {
+    font-family: 'Catamaran', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2bbbad; }
+  .item .item-question {
+    font-size: 20px;
+    font-family: 'Catamaran', sans-serif;
+    font-weight: bold;
+    color: #444748; }
+  /*.item:hover {
+    cursor: pointer; }*/
+    .search{
+      cursor: pointer;
+    }
+/*# sourceMappingURL=index.css.map */

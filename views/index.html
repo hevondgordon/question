@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:200" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.css" media="screen" title="no title">
+    <link rel="stylesheet" href="stylesheets/index.css" media="screen" title="no title">
+    <title></title>
+  </head>
+  <body>
+
+      <div class="container-fluid">
+        <nav class=''>
+            <div class="row">
+                <div class="col l1 m1 search">
+                      <i class="material-icons right ">search</i>
+                </div>
+                <div class="col l4 m4">
+                      <input type="text" name="name" class="searchbar" placeholder="Search">
+                </div>
+                <div class="col l3">
+                    <h5>Q U E S T I O N</h5>
+                </div>
+
+
+                <div class="col l2">
+
+                  &nbsp;
+                </div>
+                <div class="col l2">
+                  <a class="waves-effect waves-light btn" href="#modal1">Ask new question</a>
+
+                </div>
+
+
+            </div>
+        </nav>
+      </div>
+
+
+      <div class="container-fluid question-holder">
+
+
+      </div>
+
+
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <div class="row">
+
+              <form class="col l12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="question" class="materialize-textarea active editor"></textarea>
+                    <label for="question">Question</label>
+                  </div>
+                </div>
+              </form>
+
+
+            </div>
+
+          </div>
+          <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect btn submit-question">Edit</a>
+          </div>
+
+        </div>
+
+
+
+        <div id="modal1" class="modal">
+          <div class="modal-content">
+            <div class="row">
+              <div class="input-field col l12 s6">
+                  <input placeholder="Placeholder" id="questiontitle" type="text" class="validate">
+                  <label for="questiontitle">Title</label>
+              </div>
+
+
+              <form class="col l12">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="question" class="materialize-textarea"></textarea>
+                    <label for="question">Question</label>
+                  </div>
+                </div>
+              </form>
+              <div class="chips chips-placeholder"></div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect btn submit-question">Submit</a>
+          </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="javascripts/index.js"></script>
+    <script src="bower_components/materialize/dist/js/materialize.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $('.modal').modal({
+        dismissible: true, // Modal can be dismissed by clicking outside of the modal
+        opacity: .5, // Opacity of modal background
+        in_duration: 300, // Transition in duration
+        out_duration: 200, // Transition out duration
+        starting_top: '4%', // Starting top style attribute
+        ending_top: '10%', // Ending top style attribute
+        ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+
+          console.log(modal, trigger);
+        },
+        });
+
+
+
+
+          $('.chips-placeholder').material_chip({
+            placeholder: 'Enter a tag',
+            secondaryPlaceholder: 'Enter a tag!',
+          });
+          $('.submit-question').on('click',function(){
+
+                var title=$('#questiontitle').val();
+                var question=$('#question').val() ;
+                var tags=$('.chips-placeholder').material_chip('data');
+                console.log(`${title},${question}`);
+
+                    if(title=="" || question==""||tags.length==0){
+                      Materialize.toast('Problem asking question', 4000);
+                      return;
+                    }
+
+                    var data={};
+                    data.title=title;
+                    data.question=question;
+
+
+
+                    data.tags=JSON.stringify(tags);
+                    data.date=new Date();
+                    data.lname="Gordon";
+                    data.fname="Hevon";
+
+                    //
+                    $.ajax({
+                        method:"POST",
+                        url: "/savequestion",
+                        data:data
+                      }).done(function( msg ) {
+                            console.log(msg.tags);
+                            var question="";
+
+                              var tagged="";
+                              console.log(JSON.parse(msg.tags));
+                              parsedTags=JSON.parse(msg.tags);
+                              for (var x = 0; x < parsedTags.length; x++) {
+                                  tagged+=`<div class="chip">${parsedTags[x].tag}<i class="close material-icons">close</i></div>`
+                              }
+
+
+                              question+=`<div class="row">
+                                <div class="col l12 item z-depth-1">
+                                    <div class="row">
+                                      <div class="col l6">
+                                          <p class="item-date">Date: ${msg.date}</p>
+                                      </div>
+                                      <div class="col l6">
+                                            <p class="item-owner right">Asked by ${msg.fname} ${msg.lname}</p>
+                                            <i class="material-icons edit right">mode_edit</i>
+                                            <i class="material-icons delete right">delete_forever</i>
+                                      </div>
+                                    </div>
+                                    <p class="item-title">Title: ${msg.title}</p>
+                                    <p class="item-question">question: ${msg.question}</p>
+                                    ${tagged}
+
+                                </div>
+                              </div>`;
+
+                            var thebody=$('.question-holder').html();
+                            $('.question-holder').html(thebody+question);
+
+                            Materialize.toast('Question asked successfully', 4000)
+
+                        });
+
+          });
+          $(document).ready(function(){
+
+
+            $.ajax({
+                method:"GET",
+                url: "/showall",
+              }).done(function( msg ) {
+                    //console.log(msg);
+                    var question="";
+                    for (var i = 0; i < msg.length; i++){
+                      var tagged="";
+
+                      parsedTags=JSON.parse(msg[i].tags);
+                      for (var x = 0; x < parsedTags.length; x++) {
+                          tagged+=`<div class="chip">${parsedTags[x].tag}<i class="close material-icons">close</i></div>`
+                      }
+                      question+=`<div class="row ${msg[i]._id}">
+                        <div class="col l12 item z-depth-1">
+                            <div class="row">
+                              <div class="col l6">
+                                  <p class="item-date">Date: ${msg[i].date}</p>
+                              </div>
+                              <div class="col l6">
+                                    <p class="item-owner right">Asked by ${msg[i].fname} ${msg[i].lname}</p>
+                                    <div class="click-edit" name='${msg[i]._id}' id=click-edit-${i}><i class="material-icons edit right">mode_edit</i></div>
+                                    <div class="click-delete" name='${msg[i]._id}' id=click-delete-${i}><i class="material-icons delete right" name='${msg[i]._id}'>delete_forever</i></div>
+                              </div>
+                            </div>
+                            <p class="item-title">Title: ${msg[i].title}</p>
+                            <p class="item-question">question: ${msg[i].question}</p>
+
+                              ${tagged}
+
+
+                        </div>
+                      </div>`;
+                    }
+                    //console.log(question);
+                    $('.question-holder').html(question);
+
+
+                    $('.click-edit').on('click',function(){
+                        console.log($("."+$(this).attr('name')));
+                    });
+
+
+
+                    $('.click-delete').on('click',function(){
+                          $("."+$(this).attr('name')).hide();
+                          $.ajax({
+                              method:"post",
+                              url: "/remove",
+                              data:{_id:$(this).attr('name')}
+                            }).done(function( msg ) {
+                                console.log(msg);
+
+                            });
+                    });
+
+                    Materialize.toast('Question asked successfully', 4000);
+                    //console.log($('.question-holder').html());
+
+
+
+                  });
+
+
+
+                });
+
+                $('.search').on('click',function(){
+                      var query=$('.searchbar').val();
+                      console.log(query);
+                      data={};
+                      data.query=query;
+                      $.ajax({
+                          method:"post",
+                          url: "/search",
+                          data:data
+                        }).done(function( msg ) {
+                              console.log(msg);
+                              var question="";
+                            //  for (var i = 0; i < msg.length; i++){
+
+                              //   var tagged="";
+                              //
+                              //   parsedTags=JSON.parse(msg[i].tags);
+                              //   for (var x = 0; x < parsedTags.length; x++) {
+                              //       tagged+=`<div class="chip">${parsedTags[x].tag}<i class="close material-icons">close</i></div>`
+                              //   }
+                              //   question+=`<div class="row ${msg[i]._id}">
+                              //     <div class="col l12 item z-depth-1">
+                              //         <div class="row">
+                              //           <div class="col l6">
+                              //               <p class="item-date">Date: ${msg[i].date}</p>
+                              //           </div>
+                              //           <div class="col l6">
+                              //                 <p class="item-owner right">Asked by ${msg[i].fname} ${msg[i].lname}</p>
+                              //                 <div class="click-edit" name='${msg[i]._id}' id=click-edit-${i}><i class="material-icons edit right">mode_edit</i></div>
+                              //                 <div class="click-delete" name='${msg[i]._id}' id=click-delete-${i}><i class="material-icons delete right" name='${msg[i]._id}'>delete_forever</i></div>
+                              //           </div>
+                              //         </div>
+                              //         <p class="item-title">Title: ${msg[i].title}</p>
+                              //         <p class="item-question">question: ${msg[i].question}</p>
+                              //
+                              //           ${tagged}
+                              //
+                              //
+                              //     </div>
+                              //   </div>`;
+                              // }
+                              //console.log(question);
+                              $('.question-holder').html(question);
+
+
+
+
+
+                            });
+
+
+                });
+
+
+
+    </script>
+  </body>
+</html>

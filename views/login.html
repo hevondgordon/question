@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/materialize/dist/css/materialize.css" media="screen" title="no title">
+    <link rel="stylesheet" href="stylesheets/login.css" media="screen" title="no title">
+    <title></title>
+  </head>
+  <body>
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col l5">
+              <div class="row">
+                <div class="col l12 top">
+                  <div class="row">
+                    <div class="logintitle">
+                        <span>Q</span>
+                    </div>
+                    <div class="logintext right">LOGIN</div>
+                    <div class="col l6">
+                       &nbsp;
+                    </div>
+
+                  </div>
+
+
+                </div>
+                <div class="col l12 loginbody">
+                  <br>
+                  <br>
+                      <div class="input-field col l12 fields">
+                            <input  id="username" type="text" class="text-cola" placeholder="username@email.com">
+                            <label for="username">Username</label>
+                      </div>
+                      <br>
+                      <div class="input-field col l12">
+                            <input  id="password" type="password" class="text-cola" placeholder="••••••••••••">
+                            <label for="password">Password</label>
+                      </div>
+                      <span class="forgot">forgot password?</span>
+
+                      <br>
+                      <div class="">
+                        &nbsp;
+                      </div>
+                      <button type="button" name="button" id="logmein" class="col l12 waves-effect waves-light btn">Login</button>
+                      &nbsp;
+                      &nbsp;
+                       &nbsp;
+                      <button type="button" name="button" class="col l12 waves-effect waves-light btn">Register</button>
+
+                      <div class="col l12 error">
+
+                      </div>
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+              </div>
+          </div>
+          <div class="col l1 line">
+            &nbsp;
+          </div>
+
+          <div class="col l6 rightside">
+                <div class="description"><center>
+                  <div class="logintitle-other">
+                      Q
+                  </div>
+                  <span class="uestion">U E S T I O N</span>
+
+                </center></div>
+
+
+
+                <div class="promo">
+                    Ask questions and receive answers in real time!
+                </div>
+
+                <div class="promo">
+                    Increase productivity by not reinventing the wheel
+                </div>
+
+                <div class="promo">
+                    Do you have a question? ask now!
+                </div>
+
+
+
+
+
+
+
+
+          </div>
+
+
+        </div>
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="javascripts/index.js"></script>
+    <script src="bower_components/materialize/dist/js/materialize.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+          $('#logmein').on('click',function(){
+            var data={}
+            var errorCount=0;
+            $("input").each(function(index,value){
+              if($(this).val()==""){
+
+                  errorCount+=1;
+
+              }
+              console.log(errorCount);
+              if(errorCount>0){
+
+                $('.error').html('<center> All fields must be filled in!</center>');
+                return;
+              }
+              else{
+                $('.error').html('');
+                data[$(this).attr('id')]=$(this).val();
+              }
+
+
+            });
+
+            if(errorCount==0){
+              $.ajax({
+                  method: "POST",
+                  url: "/login",
+                  data: data
+                }).done(function( msg ) {
+
+                    if(msg=="not found"){
+                        console.log(msg)
+                        $('.error').html('<center> User not found!</center>');
+                    }
+                    else{
+                      console.log('redirecting...')
+                      location.href='/'
+                    }
+                  });
+
+            }
+
+
+          });
+
+
+    </script>
+
+
+  </body>
+</html>
